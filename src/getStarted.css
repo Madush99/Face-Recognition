@@ -1,0 +1,21 @@
+/* .get-centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+
+.landing {
+  height: calc(100vh) !important;
+  background-image: url('https://securecdn.pymnts.com/wp-content/uploads/2021/11/identity-verification-biometrics-automation-768x390.jpg') !important;
+}
+.landing .btn {
+  background-color: white !important;
+  color: black !important;
+  margin-top: 10px !important;
+}
+.bg-image {
+  background-image: url('https://securecdn.pymnts.com/wp-content/uploads/2021/11/identity-verification-biometrics-automation-768x390.jpg');
+  background-size: cover;
+  background-position: center center;
+}

@@ -9,7 +9,6 @@ const Facerecognition = () => {
   const [modelsLoaded, setModelsLoaded] = useState(false);
   const [captureVideo, setCaptureVideo] = useState(false);
 
-  
   const videoRef = useRef();
   const videoHeight = 480;
   const videoWidth = 640;
@@ -49,7 +48,7 @@ const Facerecognition = () => {
 
     const labeledDescriptors = await loadLabeledImages()
     console.log(labeledDescriptors)
-    const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.7)
+    const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6)
 
 
     setInterval(async () => {
@@ -85,11 +84,10 @@ const Facerecognition = () => {
         if (resizedDetections) {
 
           const box = resizedDetections.detection.box
-          const drawBox = new faceapi.draw.DrawBox(box, { label: bestMatch.toString() } )
+          const drawBox = new faceapi.draw.DrawBox(box, { label: bestMatch.toString() })
           drawBox.draw(canvasRef.current)
           console.log("Matching", bestMatch.toString())
         }
-
 
         if (bestMatch) {
           // handleOnClick();
@@ -97,36 +95,69 @@ const Facerecognition = () => {
           //   details={bestMatch.string()}
           // />  
           // setTimeout(() => {
-            
+
           // }, 1000);
-          if(bestMatch._label === "unknown"){
-           // start()
-          }else{
-            start()
-            closeWebcam()
-            //window.location.reload();
-           // handleOnClick()
-          }
-         
-         
-          return (
-            render(
-              <div>
-                <h1>
-                  {/* <PersonDetail
-                    details={bestMatch._label}
-                  /> */}
-                  {
-                    <AuthDetails 
-                      details={bestMatch._label}
-                    />
-                  }
-                  {bestMatch._label}
-                </h1>
-              </div>
+          if (bestMatch._label === "unknown") {
+            start2()
+            handleOnClick()
+             closeWebcam()
+            return(
+              render(
+                <div>
+                <center>
+                  <div>
+                    <h1> Authentication Fail !</h1>
+                  </div>
+                  <div>
+                    <img style={{ width: 500, height: 500 }} src={process.env.PUBLIC_URL + "img1.jpg"} />
+                  </div>
+
+                  <h2 style={{ justifyContent: "center" }}>Unauthorized Person</h2>
+                </center>
+                </div>
+               
+              )
             )
- 
-          )
+          } else {
+            start()
+             closeWebcam()
+            // window.location.reload();
+            handleOnClick()
+            return (
+              render(
+                <div>
+                  <center>
+                    <div>
+                    <h1>Sucessfully Authenticated !</h1>
+                    </div>
+                    <div>
+                      <img style={{ width: 500, height: 500 }} src={process.env.PUBLIC_URL + `/labeled_images/${bestMatch._label}/1.jpg`} />
+                    </div>
+  
+                    <h2 style={{ justifyContent: "center" }}>{bestMatch._label}</h2>
+
+                    <div>
+                    <button onClick={navigateHome} style={{ cursor: 'pointer', backgroundColor: 'green', color: 'white', padding: '15px', fontSize: '25px', border: 'none', borderRadius: '10px' }}>
+             Back to Home
+            </button>
+                    </div>
+
+                  </center>
+                  <div>
+                    {/* <button onClick={navigateHome}>
+                      Authicate Screen
+                    </button> */}
+                  </div>
+  
+  
+                </div>
+              )
+  
+            )
+          }
+
+
+          
 
         }
 
@@ -134,19 +165,30 @@ const Facerecognition = () => {
     }, 100)
   }
 
+  const navigateHome = () => {
+
+    //  <Navigate to ="/personScreen"></Navigate>
+    return navigate("/");
+    window.location.reload();
+  }
 
   const handleOnClick = () => {
 
     //  <Navigate to ="/personScreen"></Navigate>
     return navigate("/personScreen")
   }
-  let audio = new Audio(process.env.PUBLIC_URL+ `Authenticated.mp3`);
+  let audio = new Audio(process.env.PUBLIC_URL + `Authenticated.mp3`);
+  let audio2 = new Audio(process.env.PUBLIC_URL + `Unauthorized.mp3`);
 
   const start = () => {
     audio.play()
   }
+
+  const start2 = () => {
+    audio2.play()
+  }
   function loadLabeledImages() {
-    const labels = ['Madusanka Gajadeera', 'Helitha', 'Shamila', 'Avindika', 'Sayuru', 'Shehara', 'Agasthi', 'Isira'] // for WebCam
+    const labels = ['Madusanka Gajadeera', 'Helitha', 'Shamila', 'Agasthi', 'Isira'] // for WebCam
     return Promise.all(
       labels.map(async (label) => {
         const descriptions = []
@@ -164,6 +206,7 @@ const Facerecognition = () => {
         console.log(label + 'fcaes loadedm |')
         console.log("Detect", new faceapi.LabeledFaceDescriptors(label, descriptions))
 
+
         return new faceapi.LabeledFaceDescriptors(label, descriptions)
 
       })
@@ -174,7 +217,7 @@ const Facerecognition = () => {
     videoRef.current.pause();
     videoRef.current.srcObject.getTracks()[0].stop();
     setCaptureVideo(false);
-    
+
   }
 
   return (
@@ -207,9 +250,14 @@ const Facerecognition = () => {
           <>
           </>
       }
-      <button onClick={handleOnClick}>Redirect</button>
+      {/* <button onClick={handleOnClick}>Redirect</button> */}
     </div>
   )
 }
+const mystyle = {
+  backgroundColor: "#21D953",
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat"
 
+}
 export default Facerecognition

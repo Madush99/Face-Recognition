@@ -3,7 +3,7 @@ import React from 'react'
 const AuthDetails = () => {
   return (
     <div>AuthDetails
-        <h1>{this.props.details}</h1>
+        {/* <h1>{this.props.details}</h1> */}
     </div>
   )
 }
