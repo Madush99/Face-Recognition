@@ -14,6 +14,7 @@ const Facerecognition = () => {
   const videoWidth = 640;
   const canvasRef = useRef();
   let navigate = useNavigate();
+  
   useEffect(() => {
     const loadModels = async () => {
       const MODEL_URL = process.env.PUBLIC_URL + '/models';
@@ -188,7 +189,7 @@ const Facerecognition = () => {
     audio2.play()
   }
   function loadLabeledImages() {
-    const labels = ['Madusanka Gajadeera', 'Helitha', 'Shamila', 'Agasthi', 'Isira'] // for WebCam
+    const labels = ['Madusanka Gajadeera', 'Helitha', 'Minuli', 'Agasthi', 'Isira'] // for WebCam
     return Promise.all(
       labels.map(async (label) => {
         const descriptions = []
