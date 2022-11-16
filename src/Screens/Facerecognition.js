@@ -189,7 +189,7 @@ const Facerecognition = () => {
     audio2.play()
   }
   function loadLabeledImages() {
-    const labels = ['Madusanka Gajadeera', 'Helitha', 'Minuli', 'Agasthi', 'Isira'] // for WebCam
+    const labels = ['Madusanka Gajadeera', 'Helitha', 'Bulner','Isira'] // for WebCam
     return Promise.all(
       labels.map(async (label) => {
         const descriptions = []
